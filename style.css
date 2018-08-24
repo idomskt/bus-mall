@@ -1,5 +1,46 @@
 body {
     text-align: center;
+    background-image: url('http://i44.photobucket.com/albums/f35/idomosko/shopping-malls_zpspiueegjy.jpg');
+}
+.bg-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+}
+.gameContainer {
+    max-width: 980px;
+    padding: 50px;
+    margin: auto;
+    background-color: white;
+}
+h1 {
+    text-transform: capitalize;
+    font-size: 40px;
+}
+p {
+    font-size: 20px;
+    line-height: 1.8;
+}
+.progressBar {
+width: 100%;
+list-style: none;
+display: flex;
+}
+.progressBar li {
+    width: 32%; 
+    margin: auto;
+    border: 1px solid #f2f2f2;
+    height: 10px;
+}
+.empty {
+    background-color: #333;
+}
+.full {
+    background-color: pink;
 }
 img {
     max-height: 200px;
@@ -13,7 +54,6 @@ ul {
     display: flex;
     flex-flow: wrap;
     text-align: center;
-    max-width: 980px;
     margin: auto;
     list-style: none;
     padding: 0;
@@ -32,6 +72,7 @@ ul span {
     right: 0;
     background-color: peachpuff;
     border-radius: 40px;
+    color: black;
     padding: 20px 27px;
     margin-top: -15px;
     font-weight: bold;

@@ -22,6 +22,7 @@ images.push(new Image('wine_glass.jpg'));
 var imagesContainer = document.getElementById('imagesContainer');
 var gameTitle = document.getElementsByTagName('h2')[0];
 var roundTitle = document.getElementsByTagName('h3')[0];
+var instructions = document.getElementsByClassName('instructions')[0];
 var clicks = 0;
 
 function generate3Images() {
@@ -29,6 +30,7 @@ function generate3Images() {
     var buttonContainer = document.getElementsByClassName('button')[0];
     roundTitle.innerText = 'This is round number ' + clicks;
     buttonContainer.innerHTML = ' ';
+    instructions.innerHTML = ' ';
     if(clicks < 3) {
     var leftImage = Math.floor(Math.random()*images.length);
     var centerImage = Math.floor(Math.random()*images.length);
@@ -78,6 +80,7 @@ function showResults() {
     var results = document.getElementById('results');
     var list = document.createElement('ul');
     results.appendChild(list);
+    
     var listItem, createImage, clickResults;
 
     for(var imageIndex = 0; imageIndex < images.length; imageIndex++){
@@ -92,8 +95,14 @@ function showResults() {
     }
 }
 
+function progressBar() {
+    var firstDash = document.getElementsByClassName('empty')[0];
+    firstDash.removeAttribute('class', 'empty');
+    firstDash.setAttribute('class', 'full');
+}
 
 document.getElementById('startGame').addEventListener("click", generate3Images);
 imagesContainer.addEventListener("click", imageClickCounter);
 imagesContainer.addEventListener("click", generate3Images);
+imagesContainer.addEventListener("click", progressBar);
 
