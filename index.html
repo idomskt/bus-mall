@@ -8,31 +8,45 @@
 <body>
     <div class="bg-overlay"></div>
 
-    <div class="gameContainer">
+    <main>
 
         <section class="instructions">
             <h1>Welcome to the bus mall</h1>
             <p>Here in the Bus Mall, we would like to test some products prototypes before we push it into the market. Therefore, In the next few minutes you'll be presented with three images of the products. Choose your preferred product of the 3. After each click, three new images will be displayed. Keep selecting your preferred profuct for 15 rounds.</p>
-        </section>
-
-        <h2 class="gameTitle"></h2>
-        <h3 class="roundTitle"></h3>
-
-        <ul class="progressBar">
-            <li class="empty"></li>
-            <li class="empty"></li>
-            <li class="empty"></li>
-        </ul>
-        
-        <section id="imagesContainer">
-        </section>
-
-        <div class="button">
             <button id="startGame">Start The Game</button>
-        </div> 
+        </section>
+
+        <section class="theGame">
+
+            <h2 class="gameTitle"></h2>
+            <h3 class="roundTitle"></h3>
+
+            <ul class="progressBar hide">
+                <li class="empty"></li>
+                <li class="empty"></li>
+                <li class="empty"></li>
+                <li class="empty"></li>
+                <li class="empty"></li>
+                <li class="empty"></li>
+                <li class="empty"></li>
+                <li class="empty"></li>
+                <li class="empty"></li>
+                <li class="empty"></li>
+                <li class="empty"></li>
+                <li class="empty"></li>
+                <li class="empty"></li>
+                <li class="empty"></li>
+                <li class="empty"></li>
+            </ul>
+
+            <div id="imagesContainer">
+            </div>
+        </section>
+       
 
         <section id="results" class="results"></section>
-    </div>
+
+    </main>
 
     <script src="scripts.js"></script>
 </body>

@@ -23,15 +23,18 @@ var imagesContainer = document.getElementById('imagesContainer');
 var gameTitle = document.getElementsByTagName('h2')[0];
 var roundTitle = document.getElementsByTagName('h3')[0];
 var instructions = document.getElementsByClassName('instructions')[0];
+var progressBar = document.getElementsByClassName('progressBar')[0];
+var buttonContainer = document.getElementsByTagName('button')[0];
 var clicks = 0;
 
 function generate3Images() {
     gameTitle.innerText = 'Please select 1 of the images below';
-    var buttonContainer = document.getElementsByClassName('button')[0];
     roundTitle.innerText = 'This is round number ' + clicks;
     buttonContainer.innerHTML = ' ';
     instructions.innerHTML = ' ';
-    if(clicks < 3) {
+    progressBar.removeAttribute('class', 'hide');
+    progressBar.setAttribute('class', 'progressBar');
+    if(clicks < 16) {
     var leftImage = Math.floor(Math.random()*images.length);
     var centerImage = Math.floor(Math.random()*images.length);
     var rightImage = Math.floor(Math.random()*images.length);
@@ -45,26 +48,39 @@ function generate3Images() {
     
     var createImage = document.createElement('img');
     createImage.setAttribute('src', 'images/' + images[leftImage].filename);
+    createImage.setAttribute('class', 'image');
     imagesContainer.appendChild(createImage);
     createImage = document.createElement('img');
     createImage.setAttribute('src', 'images/' + images[centerImage].filename);
+    createImage.setAttribute('class', 'image');
     imagesContainer.appendChild(createImage);
     createImage = document.createElement('img');
     createImage.setAttribute('src', 'images/' + images[rightImage].filename);
+    createImage.setAttribute('class', 'image');
     imagesContainer.appendChild(createImage);
     
     } else {
+        gameTitle.innerText = 'Results';
+        roundTitle.innerText = ' ';
+        progressBar.setAttribute('class', 'hide');
+        imagesContainer.innerHTML = ' ';
         showResults();
     }
 }
 
 
 function imageClickCounter(e) {
-    clicks++;
-    var target = e.target.src;
-    var splitTarget = target.split('/');
+    var target = e.target;
+    if(target.classList.contains('image')){
+        clicks++;
+    }
+    var targetSource = target.src;
+    var splitTarget = targetSource.split('/');
     var targetSrc = splitTarget[splitTarget.length - 1];
     console.log(targetSrc);
+    var firstDash = document.getElementsByClassName('empty')[0];
+    firstDash.removeAttribute('class', 'empty');
+    firstDash.setAttribute('class', 'full');
     
     for(var imageIndex = 0; imageIndex < images.length; imageIndex++){
         if(images[imageIndex].filename == targetSrc){
@@ -74,9 +90,6 @@ function imageClickCounter(e) {
 }
 
 function showResults() {
-    gameTitle.innerText = 'Results';
-    roundTitle.innerText = ' ';
-    imagesContainer.innerHTML = ' ';
     var results = document.getElementById('results');
     var list = document.createElement('ul');
     results.appendChild(list);
@@ -95,14 +108,17 @@ function showResults() {
     }
 }
 
-function progressBar() {
-    var firstDash = document.getElementsByClassName('empty')[0];
-    firstDash.removeAttribute('class', 'empty');
-    firstDash.setAttribute('class', 'full');
+function funcName(e) {
+    var target = e.target;
+    if(target.classList.contains('image')){
+        generate3Images();
+    }
+    console.log(target);
 }
 
-document.getElementById('startGame').addEventListener("click", generate3Images);
+
+
 imagesContainer.addEventListener("click", imageClickCounter);
-imagesContainer.addEventListener("click", generate3Images);
-imagesContainer.addEventListener("click", progressBar);
+document.getElementById('startGame').addEventListener("click", generate3Images);
+imagesContainer.addEventListener("click", funcName);
 

@@ -11,7 +11,7 @@ body {
     background-color: rgba(0, 0, 0, 0.5);
     z-index: -1;
 }
-.gameContainer {
+main {
     max-width: 980px;
     padding: 50px;
     margin: auto;
@@ -26,12 +26,15 @@ p {
     line-height: 1.8;
 }
 .progressBar {
-width: 100%;
-list-style: none;
-display: flex;
+    width: 700px;
+    list-style: none;
+    display: flex;
+}
+.hide {
+    display: none;
 }
 .progressBar li {
-    width: 32%; 
+    width: 6%; 
     margin: auto;
     border: 1px solid #f2f2f2;
     height: 10px;
