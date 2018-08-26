@@ -1,6 +1,8 @@
 var Image = function(filename) {
     this.filename = filename;
+    this.label = filename.split('.') [0];
     this.imageClickTotal = 0;
+    this.y = 0;
 }
 
 var images = [];
@@ -26,6 +28,7 @@ var instructions = document.getElementsByClassName('instructions')[0];
 var progressBar = document.getElementsByClassName('progressBar')[0];
 var buttonContainer = document.getElementsByTagName('button')[0];
 var clicks = 0;
+
 
 function generate3Images() {
     gameTitle.innerText = 'Please select 1 of the images below';
@@ -86,9 +89,12 @@ function imageClickCounter(e) {
     for(var imageIndex = 0; imageIndex < images.length; imageIndex++){
         if(images[imageIndex].filename == targetSrc){
             images[imageIndex].imageClickTotal += 1;
+            images[imageIndex].y++;
         } 
+        chart.render();
     }
 }
+loadChart();
 
 function showResults() {
     var results = document.getElementById('results');
@@ -122,31 +128,3 @@ function funcName(e) {
 imagesContainer.addEventListener("click", imageClickCounter);
 document.getElementById('startGame').addEventListener("click", generate3Images);
 imagesContainer.addEventListener("click", funcName);
-
-
-
-
-
-
-
-window.onload = function () {
-	var chart = new CanvasJS.Chart("chartContainer", {
-		title:{
-			text: "My First Chart in CanvasJS"              
-		},
-		data: [              
-		{
-			// Change type to "doughnut", "line", "splineArea", etc.
-			type: "column",
-			dataPoints: [
-				{ label: "apple",  y: 10  },
-				{ label: "orange", y: 15  },
-				{ label: "banana", y: 25  },
-				{ label: "mango",  y: 30  },
-				{ label: "grape",  y: 28  }
-			]
-		}
-		]
-	});
-	chart.render();
-}
