@@ -34,30 +34,31 @@ function generate3Images() {
     instructions.innerHTML = ' ';
     progressBar.removeAttribute('class', 'hide');
     progressBar.setAttribute('class', 'progressBar');
+
     if(clicks < 16) {
-    var leftImage = Math.floor(Math.random()*images.length);
-    var centerImage = Math.floor(Math.random()*images.length);
-    var rightImage = Math.floor(Math.random()*images.length);
-    
-    imagesContainer.innerHTML = ' ';
-    
-    while(leftImage == centerImage || leftImage == rightImage || centerImage == rightImage) {
-        centerImage = Math.floor(Math.random()*images.length);
-        rightImage = Math.floor(Math.random()*images.length);
-    }
-    
-    var createImage = document.createElement('img');
-    createImage.setAttribute('src', 'images/' + images[leftImage].filename);
-    createImage.setAttribute('class', 'image');
-    imagesContainer.appendChild(createImage);
-    createImage = document.createElement('img');
-    createImage.setAttribute('src', 'images/' + images[centerImage].filename);
-    createImage.setAttribute('class', 'image');
-    imagesContainer.appendChild(createImage);
-    createImage = document.createElement('img');
-    createImage.setAttribute('src', 'images/' + images[rightImage].filename);
-    createImage.setAttribute('class', 'image');
-    imagesContainer.appendChild(createImage);
+        var leftImage = Math.floor(Math.random()*images.length);
+        var centerImage = Math.floor(Math.random()*images.length);
+        var rightImage = Math.floor(Math.random()*images.length);
+        
+        imagesContainer.innerHTML = ' ';
+        
+        while(leftImage == centerImage || leftImage == rightImage || centerImage == rightImage) {
+            centerImage = Math.floor(Math.random()*images.length);
+            rightImage = Math.floor(Math.random()*images.length);
+        }
+        
+        var createImage = document.createElement('img');
+        createImage.setAttribute('src', 'images/' + images[leftImage].filename);
+        createImage.setAttribute('class', 'image');
+        imagesContainer.appendChild(createImage);
+        createImage = document.createElement('img');
+        createImage.setAttribute('src', 'images/' + images[centerImage].filename);
+        createImage.setAttribute('class', 'image');
+        imagesContainer.appendChild(createImage);
+        createImage = document.createElement('img');
+        createImage.setAttribute('src', 'images/' + images[rightImage].filename);
+        createImage.setAttribute('class', 'image');
+        imagesContainer.appendChild(createImage);
     
     } else {
         gameTitle.innerText = 'Results';
@@ -122,3 +123,30 @@ imagesContainer.addEventListener("click", imageClickCounter);
 document.getElementById('startGame').addEventListener("click", generate3Images);
 imagesContainer.addEventListener("click", funcName);
 
+
+
+
+
+
+
+window.onload = function () {
+	var chart = new CanvasJS.Chart("chartContainer", {
+		title:{
+			text: "My First Chart in CanvasJS"              
+		},
+		data: [              
+		{
+			// Change type to "doughnut", "line", "splineArea", etc.
+			type: "column",
+			dataPoints: [
+				{ label: "apple",  y: 10  },
+				{ label: "orange", y: 15  },
+				{ label: "banana", y: 25  },
+				{ label: "mango",  y: 30  },
+				{ label: "grape",  y: 28  }
+			]
+		}
+		]
+	});
+	chart.render();
+}
