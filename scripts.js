@@ -6,6 +6,10 @@ var Image = function(filename) {
 }
 
 var images = [];
+var votes = [];
+
+
+
 images.push(new Image('bag.jpg'));
 images.push(new Image('banana.jpg'));
 images.push(new Image('boots.jpg'));
@@ -102,17 +106,31 @@ function showResults() {
     results.appendChild(list);
     
     var listItem, createImage, clickResults;
+    var imagesCopy = images;
 
     for(var imageIndex = 0; imageIndex < images.length; imageIndex++){
-        listItem = document.createElement('li');
-        createImage = document.createElement('img');
-        createImage.setAttribute('src', 'images/' + images[imageIndex].filename);
-        clickResults = document.createElement('span');
-        clickResults.innerHTML = images[imageIndex].imageClickTotal;
-        listItem.appendChild(clickResults);
-        listItem.appendChild(createImage);
-        list.appendChild(listItem);
+        votes.push(images[imageIndex].y);
     }
+    votes.sort(function(a, b) {
+        return b - a;
+    });
+
+      for(var votesIndex = 0; votesIndex < votes.length; votesIndex++) {
+        for(var imageIndex = 0; imageIndex < imagesCopy.length; imageIndex++){
+            if(votes[votesIndex] == imagesCopy[imageIndex].y){
+                listItem = document.createElement('li');
+                createImage = document.createElement('img');
+                createImage.setAttribute('src', 'images/' + imagesCopy[imageIndex].filename);
+                clickResults = document.createElement('span');
+                clickResults.innerHTML = votes[votesIndex];
+                listItem.appendChild(clickResults);
+                listItem.appendChild(createImage);
+                list.appendChild(listItem);
+                imagesCopy.splice(imageIndex, 1);
+            }
+        }
+    }
+    
 }
 
 function funcName(e) {
