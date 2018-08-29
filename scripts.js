@@ -7,8 +7,30 @@ var Image = function(filename) {
 
 var images = [];
 var votes = [];
+var allTimeTotal = [];
+loadChart();
 
 
+function buildTotalChart() {
+    if(localStorage.getItem('Total Votes') == null) {
+        for(var i = 0; i < images.length; i++){
+            allTimeTotal.push(images[i]);
+        }
+        localStorage.setItem('Total Votes', JSON.stringify(allTimeTotal));
+    } else {
+        var jsonParse = JSON.parse(localStorage.getItem('Total Votes'));
+
+        for(var jsonParseIndex = 0; jsonParseIndex < jsonParse.length; jsonParseIndex++){
+            for(var imageIndex = 0; imageIndex < images.length; imageIndex++){
+                if(jsonParse[jsonParseIndex].filename == images[imageIndex].filename) {
+                    jsonParse[jsonParseIndex].y += images[imageIndex].y;
+                }
+            }
+        }
+        localStorage.setItem('Total Votes', JSON.stringify(jsonParse));
+        return jsonParse;
+    }
+}
 
 images.push(new Image('bag.jpg'));
 images.push(new Image('banana.jpg'));
@@ -24,6 +46,9 @@ images.push(new Image('unicorn.jpg'));
 images.push(new Image('usb.jpg'));
 images.push(new Image('water_can.jpg'));
 images.push(new Image('wine_glass.jpg'));
+
+
+
 
 var imagesContainer = document.getElementById('imagesContainer');
 var gameTitle = document.getElementsByTagName('h2')[0];
@@ -42,7 +67,7 @@ function generate3Images() {
     progressBar.removeAttribute('class', 'hide');
     progressBar.setAttribute('class', 'progressBar');
 
-    if(clicks < 16) {
+    if(clicks < 15) {
         var leftImage = Math.floor(Math.random()*images.length);
         var centerImage = Math.floor(Math.random()*images.length);
         var rightImage = Math.floor(Math.random()*images.length);
@@ -72,9 +97,18 @@ function generate3Images() {
         roundTitle.innerText = ' ';
         progressBar.setAttribute('class', 'hide');
         imagesContainer.innerHTML = ' ';
+        buildTotalChart();
+        loadTotalChart();
+        
         showResults();
-    }
+     
+
+        }
+
 }
+
+
+
 
 
 function imageClickCounter(e) {
@@ -82,6 +116,8 @@ function imageClickCounter(e) {
     if(target.classList.contains('image')){
         clicks++;
     }
+
+
     var targetSource = target.src;
     var splitTarget = targetSource.split('/');
     var targetSrc = splitTarget[splitTarget.length - 1];
@@ -95,10 +131,13 @@ function imageClickCounter(e) {
             images[imageIndex].imageClickTotal += 1;
             images[imageIndex].y++;
         } 
-        chart.render();
+        chart.render(loadChart());
     }
+
+
 }
-loadChart();
+// loadChart();
+// loadTotalChart();
 
 function showResults() {
     var results = document.getElementById('results');
@@ -130,8 +169,16 @@ function showResults() {
             }
         }
     }
+
+    var resetButton = document.createElement('button');
+    resetButton.setAttribute('onClick', 'location.reload()');
+    resetButton.innerText = 'Restart The Game';
+    results.appendChild(resetButton);
+    
     
 }
+
+
 
 function funcName(e) {
     var target = e.target;
@@ -142,7 +189,7 @@ function funcName(e) {
 }
 
 
-
+window.addEventListener('load', buildTotalChart);
 imagesContainer.addEventListener("click", imageClickCounter);
 document.getElementById('startGame').addEventListener("click", generate3Images);
 imagesContainer.addEventListener("click", funcName);
