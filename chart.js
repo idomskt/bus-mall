@@ -12,10 +12,30 @@ function loadChart () {
 		{
 			// Change type to "doughnut", "line", "splineArea", etc.
 			type: "column",
-			dataPoints: images
+			dataPoints: images,
 		}
 		]
 	});
 	chart.render();
+}
+// loadChart();
+
+function loadChartTwo () {
+	chart = new CanvasJS.Chart("chartContainerTotals", {
+	title:{
+		text: "Total Votes"              
+	},
+	axisX:{
+		labelAngle: 270,
+		},
+	data: [              
+	{
+		// Change type to "doughnut", "line", "splineArea", etc.
+		type: "column",
+		dataPoints: votesData,
+	}
+	]
+});
+chart.render();
 }
 // loadChart();

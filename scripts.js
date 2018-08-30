@@ -1,29 +1,37 @@
-var Image = function(filename) {
+var Image = function(filename, label, clicks) {
     this.filename = filename;
-    this.label = filename.split('.') [0];
+    this.label = label = (filename.length - 1),
+    // filename.split('.') [0];
     this.imageClickTotal = 0;
-    this.y = 0;
+    this.allTheTotalsOfAllTime;
+    this.y += this.imageClickTotal;
+    this.y = clicks;
 }
 
 var images = [];
 var votes = [];
 
-
-
-images.push(new Image('bag.jpg'));
-images.push(new Image('banana.jpg'));
-images.push(new Image('boots.jpg'));
-images.push(new Image('chair.jpg'));
-images.push(new Image('cthulhu.jpg'));
-images.push(new Image('dragon.jpg'));
-images.push(new Image('pen.jpg'));
-images.push(new Image('scissors.jpg'));
-images.push(new Image('shark.jpg'));
-images.push(new Image('sweep.jpg'));
-images.push(new Image('unicorn.jpg'));
-images.push(new Image('usb.jpg'));
-images.push(new Image('water_can.jpg'));
-images.push(new Image('wine_glass.jpg'));
+if (localStorage.getItem('votes')) {
+    var votesData = JSON.parse(localStorage.getItem('votes'));
+    for ( var votesIndex = 0; votesIndex < votesData.length; votesIndex++) {
+       images.push(new Image(votesData[votesIndex].filename, votesData[votesIndex].label, votesData[votesIndex].y)); 
+    } 
+} else {
+    images.push(new Image('bag.jpg', 0));
+    images.push(new Image('banana.jpg', 0));
+    images.push(new Image('boots.jpg', 0));
+    images.push(new Image('chair.jpg', 0));
+    images.push(new Image('cthulhu.jpg', 0));
+    images.push(new Image('dragon.jpg', 0));
+    images.push(new Image('pen.jpg', 0));
+    images.push(new Image('scissors.jpg', 0));
+    images.push(new Image('shark.jpg', 0));
+    images.push(new Image('sweep.jpg', 0));
+    images.push(new Image('unicorn.jpg', 0));
+    images.push(new Image('usb.jpg', 0));
+    images.push(new Image('water_can.jpg', 0));
+    images.push(new Image('wine_glass.jpg', 0));
+}
 
 var imagesContainer = document.getElementById('imagesContainer');
 var gameTitle = document.getElementsByTagName('h2')[0];
@@ -42,7 +50,7 @@ function generate3Images() {
     progressBar.removeAttribute('class', 'hide');
     progressBar.setAttribute('class', 'progressBar');
 
-    if(clicks < 16) {
+    if(clicks < 5) {
         var leftImage = Math.floor(Math.random()*images.length);
         var centerImage = Math.floor(Math.random()*images.length);
         var rightImage = Math.floor(Math.random()*images.length);
@@ -95,10 +103,16 @@ function imageClickCounter(e) {
             images[imageIndex].imageClickTotal += 1;
             images[imageIndex].y++;
         } 
-        chart.render();
+        loadChart();
+        
+        localStorage.setItem("votes", JSON.stringify(images));
+        showTotalVotesChart();
+        // localStorage.setItem("labels", JSON.stringify(images.filename));
     }
+
 }
-loadChart();
+// loadChart();
+
 
 function showResults() {
     var results = document.getElementById('results');
@@ -127,9 +141,13 @@ function showResults() {
                 listItem.appendChild(createImage);
                 list.appendChild(listItem);
                 imagesCopy.splice(imageIndex, 1);
+
+                // localStorage.setItem("label", JSON.stringify(imagesCopy[imageIndex].filename));
             }
         }
+
     }
+    
     
 }
 
@@ -141,8 +159,21 @@ function funcName(e) {
     console.log(target);
 }
 
+var votesData = [];
+function showTotalVotesChart() {
+   
+    var storedVotes = JSON.parse(localStorage.getItem('votes'));
+    if (storedVotes != null) {
+        for (var i = 0; i < storedVotes.length; i++) {
+            var votesCounter = storedVotes[i];
+            votesData.push(new Image(votesCounter.label, votesCounter.y));
+        }
+    }
+    loadChartTwo(); 
+}
 
 
+window.addEventListener('load', showTotalVotesChart);
 imagesContainer.addEventListener("click", imageClickCounter);
 document.getElementById('startGame').addEventListener("click", generate3Images);
 imagesContainer.addEventListener("click", funcName);
