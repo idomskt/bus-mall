@@ -12,12 +12,14 @@ function loadChart () {
 		{
 			// Change type to "doughnut", "line", "splineArea", etc.
 			type: "column",
-			dataPoints: images
+			dataPoints: images,
 		}
 		]
 	});
 	chart.render();
 }
+
+
 
 function loadTotalChart () {
 	chart = new CanvasJS.Chart("totalChartContainer", {
