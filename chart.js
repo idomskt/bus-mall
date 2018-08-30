@@ -3,7 +3,7 @@ var chart;
 function loadChart () {
     chart = new CanvasJS.Chart("chartContainer", {
 		title:{
-			text: "My First Chart in CanvasJS"              
+			text: "User Pick"              
 		},
 		axisX:{
 			labelAngle: 270,
@@ -20,10 +20,10 @@ function loadChart () {
 }
 // loadChart();
 
-function loadChartTwo () {
+function loadTotalChart () {
 	chart = new CanvasJS.Chart("chartContainerTotals", {
 	title:{
-		text: "Total Votes"              
+		text: "All Time Total"              
 	},
 	axisX:{
 		labelAngle: 270,
@@ -32,7 +32,7 @@ function loadChartTwo () {
 	{
 		// Change type to "doughnut", "line", "splineArea", etc.
 		type: "column",
-		dataPoints: votesData,
+		dataPoints: buildTotalChart(),
 	}
 	]
 });

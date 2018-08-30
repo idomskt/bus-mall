@@ -1,37 +1,51 @@
-var Image = function(filename, label, clicks) {
+var Image = function(filename) {
     this.filename = filename;
-    this.label = label = (filename.length - 1),
-    // filename.split('.') [0];
+    this.label = filename.split('.') [0];
     this.imageClickTotal = 0;
-    this.allTheTotalsOfAllTime;
-    this.y += this.imageClickTotal;
-    this.y = clicks;
+    this.y = 0;
 }
 
 var images = [];
 var votes = [];
+var allTimeTotal = [];
+loadChart();
 
-if (localStorage.getItem('votes')) {
-    var votesData = JSON.parse(localStorage.getItem('votes'));
-    for ( var votesIndex = 0; votesIndex < votesData.length; votesIndex++) {
-       images.push(new Image(votesData[votesIndex].filename, votesData[votesIndex].label, votesData[votesIndex].y)); 
-    } 
-} else {
-    images.push(new Image('bag.jpg', 0));
-    images.push(new Image('banana.jpg', 0));
-    images.push(new Image('boots.jpg', 0));
-    images.push(new Image('chair.jpg', 0));
-    images.push(new Image('cthulhu.jpg', 0));
-    images.push(new Image('dragon.jpg', 0));
-    images.push(new Image('pen.jpg', 0));
-    images.push(new Image('scissors.jpg', 0));
-    images.push(new Image('shark.jpg', 0));
-    images.push(new Image('sweep.jpg', 0));
-    images.push(new Image('unicorn.jpg', 0));
-    images.push(new Image('usb.jpg', 0));
-    images.push(new Image('water_can.jpg', 0));
-    images.push(new Image('wine_glass.jpg', 0));
+function buildTotalChart() {
+    if(localStorage.getItem('Total Votes') == null) {
+        for(var i = 0; i < images.length; i++) {
+            allTimeTotal.push(images[i]);
+        }
+        localStorage.setItem('Total Votes', JSON.stringify(allTimeTotal));
+    } else {
+        var jsonParse = JSON.parse(localStorage.getItem('Total Votes'));
+
+        for(var jsonParseIndex = 0; jsonParseIndex < jsonParse.length; jsonParseIndex++) {
+            for(var imageIndex = 0; imageIndex < images.length; imageIndex++) {
+                if(jsonParse[jsonParseIndex].filename == images[imageIndex].filename) {
+                    jsonParse[jsonParseIndex].y += images[imageIndex].y;
+                }
+            }
+        }
+        localStorage.setItem('Total Votes', JSON.stringify(jsonParse));
+        return jsonParse;
+    }
 }
+
+images.push(new Image('bag.jpg', 0));
+images.push(new Image('banana.jpg', 0));
+images.push(new Image('boots.jpg', 0));
+images.push(new Image('chair.jpg', 0));
+images.push(new Image('cthulhu.jpg', 0));
+images.push(new Image('dragon.jpg', 0));
+images.push(new Image('pen.jpg', 0));
+images.push(new Image('scissors.jpg', 0));
+images.push(new Image('shark.jpg', 0));
+images.push(new Image('sweep.jpg', 0));
+images.push(new Image('unicorn.jpg', 0));
+images.push(new Image('usb.jpg', 0));
+images.push(new Image('water_can.jpg', 0));
+images.push(new Image('wine_glass.jpg', 0));
+
 
 var imagesContainer = document.getElementById('imagesContainer');
 var gameTitle = document.getElementsByTagName('h2')[0];
@@ -50,7 +64,7 @@ function generate3Images() {
     progressBar.removeAttribute('class', 'hide');
     progressBar.setAttribute('class', 'progressBar');
 
-    if(clicks < 5) {
+    if(clicks < 15) {
         var leftImage = Math.floor(Math.random()*images.length);
         var centerImage = Math.floor(Math.random()*images.length);
         var rightImage = Math.floor(Math.random()*images.length);
@@ -80,6 +94,8 @@ function generate3Images() {
         roundTitle.innerText = ' ';
         progressBar.setAttribute('class', 'hide');
         imagesContainer.innerHTML = ' ';
+        buildTotalChart();
+        loadTotalChart();
         showResults();
     }
 }
@@ -103,15 +119,10 @@ function imageClickCounter(e) {
             images[imageIndex].imageClickTotal += 1;
             images[imageIndex].y++;
         } 
-        loadChart();
-        
-        localStorage.setItem("votes", JSON.stringify(images));
-        showTotalVotesChart();
-        // localStorage.setItem("labels", JSON.stringify(images.filename));
+        chart.render(loadChart());
     }
 
 }
-// loadChart();
 
 
 function showResults() {
@@ -141,14 +152,14 @@ function showResults() {
                 listItem.appendChild(createImage);
                 list.appendChild(listItem);
                 imagesCopy.splice(imageIndex, 1);
-
-                // localStorage.setItem("label", JSON.stringify(imagesCopy[imageIndex].filename));
             }
         }
 
     }
-    
-    
+    var resetButton = document.createElement('button');
+    resetButton.setAttribute('onClick', 'location.reload()');
+    resetButton.innerText = 'Restart The Game';
+    results.appendChild(resetButton);
 }
 
 function funcName(e) {
@@ -159,21 +170,8 @@ function funcName(e) {
     console.log(target);
 }
 
-var votesData = [];
-function showTotalVotesChart() {
-   
-    var storedVotes = JSON.parse(localStorage.getItem('votes'));
-    if (storedVotes != null) {
-        for (var i = 0; i < storedVotes.length; i++) {
-            var votesCounter = storedVotes[i];
-            votesData.push(new Image(votesCounter.label, votesCounter.y));
-        }
-    }
-    loadChartTwo(); 
-}
 
-
-window.addEventListener('load', showTotalVotesChart);
+window.addEventListener('load', buildTotalChart);
 imagesContainer.addEventListener("click", imageClickCounter);
 document.getElementById('startGame').addEventListener("click", generate3Images);
 imagesContainer.addEventListener("click", funcName);
