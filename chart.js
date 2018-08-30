@@ -18,10 +18,11 @@ function loadChart () {
 	});
 	chart.render();
 }
-// loadChart();
+
+
 
 function loadTotalChart () {
-	chart = new CanvasJS.Chart("chartContainerTotals", {
+	chart = new CanvasJS.Chart("totalChartContainer", {
 	title:{
 		text: "All Time Total"              
 	},
@@ -32,10 +33,9 @@ function loadTotalChart () {
 	{
 		// Change type to "doughnut", "line", "splineArea", etc.
 		type: "column",
-		dataPoints: buildTotalChart(),
+		dataPoints: buildTotalChart()
 	}
 	]
 });
 chart.render();
 }
-// loadChart();

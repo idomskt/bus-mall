@@ -10,6 +10,7 @@ var votes = [];
 var allTimeTotal = [];
 loadChart();
 
+
 function buildTotalChart() {
     if(localStorage.getItem('Total Votes') == null) {
         for(var i = 0; i < images.length; i++) {
@@ -97,8 +98,14 @@ function generate3Images() {
         buildTotalChart();
         loadTotalChart();
         showResults();
-    }
+     
+
+        }
+
 }
+
+
+
 
 
 function imageClickCounter(e) {
@@ -106,6 +113,8 @@ function imageClickCounter(e) {
     if(target.classList.contains('image')){
         clicks++;
     }
+
+
     var targetSource = target.src;
     var splitTarget = targetSource.split('/');
     var targetSrc = splitTarget[splitTarget.length - 1];
@@ -121,8 +130,6 @@ function imageClickCounter(e) {
         } 
         chart.render(loadChart());
     }
-
-}
 
 
 function showResults() {
@@ -161,6 +168,8 @@ function showResults() {
     resetButton.innerText = 'Restart The Game';
     results.appendChild(resetButton);
 }
+
+
 
 function funcName(e) {
     var target = e.target;
