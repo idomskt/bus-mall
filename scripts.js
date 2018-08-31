@@ -95,7 +95,7 @@ function generate3Images() {
         roundTitle.innerText = ' ';
         progressBar.setAttribute('class', 'hide');
         imagesContainer.innerHTML = ' ';
-        // loadChart();
+        loadChart();
         loadTotalChart();
         showResults();
         }
@@ -108,12 +108,15 @@ function imageClickCounter(e) {
     var target = e.target;
     if(target.classList.contains('image')){
         clicks++;
+        generate3Images();
     }
     
     var targetSource = target.src;
     var splitTarget = targetSource.split('/');
     var targetSrc = splitTarget[splitTarget.length - 1];
     console.log(targetSrc);
+
+    // Progress Bar
     var firstDash = document.getElementsByClassName('empty')[0];
     firstDash.removeAttribute('class', 'empty');
     firstDash.setAttribute('class', 'full');
@@ -123,9 +126,7 @@ function imageClickCounter(e) {
             images[imageIndex].imageClickTotal += 1;
             images[imageIndex].y++;
         } 
-        loadChart();
     }
-
 }
 
 function showResults() {
@@ -165,23 +166,9 @@ function showResults() {
     resetButton.innerText = 'Restart The Game';
     displayButton.appendChild(resetButton);
     
-    
-}
-
-
-
-function funcName(e) {
-    var target = e.target;
-    if(target.classList.contains('image')){
-        generate3Images();
-    }
-    console.log(target);
 }
 
 
 window.addEventListener('load', buildTotalChart);
-// imagesContainer.addEventListener("click", generate3Images);
 imagesContainer.addEventListener("click", imageClickCounter);
-document.getElementById('startGame').addEventListener("click", generate3Images);
 
-imagesContainer.addEventListener("click", funcName);
