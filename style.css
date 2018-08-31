@@ -83,3 +83,9 @@ ul span {
     font-size: 20px;
     border: 1px solid black;
 }
+.displayCharts {
+    display: flex;
+}
+#chartContainer, #totalChartContainer {
+    width: 50%;
+}

@@ -5,32 +5,18 @@ var Image = function(filename) {
     this.y = 0;
 }
 
+
+// Define Global Variables
 var images = [];
 var votes = [];
 var allTimeTotal = [];
-loadChart();
-
-
-function buildTotalChart() {
-    if(localStorage.getItem('Total Votes') == null) {
-        for(var i = 0; i < images.length; i++){
-            allTimeTotal.push(images[i]);
-        }
-        localStorage.setItem('Total Votes', JSON.stringify(allTimeTotal));
-    } else {
-        var jsonParse = JSON.parse(localStorage.getItem('Total Votes'));
-
-        for(var jsonParseIndex = 0; jsonParseIndex < jsonParse.length; jsonParseIndex++){
-            for(var imageIndex = 0; imageIndex < images.length; imageIndex++){
-                if(jsonParse[jsonParseIndex].filename == images[imageIndex].filename) {
-                    jsonParse[jsonParseIndex].y += images[imageIndex].y;
-                }
-            }
-        }
-        localStorage.setItem('Total Votes', JSON.stringify(jsonParse));
-        return jsonParse;
-    }
-}
+var imagesContainer = document.getElementById('imagesContainer');
+var gameTitle = document.getElementsByTagName('h2')[0];
+var roundTitle = document.getElementsByTagName('h3')[0];
+var instructions = document.getElementsByClassName('instructions')[0];
+var progressBar = document.getElementsByClassName('progressBar')[0];
+var buttonContainer = document.getElementsByTagName('button')[0];
+var clicks = 0;
 
 images.push(new Image('bag.jpg'));
 images.push(new Image('banana.jpg'));
@@ -47,16 +33,26 @@ images.push(new Image('usb.jpg'));
 images.push(new Image('water_can.jpg'));
 images.push(new Image('wine_glass.jpg'));
 
-
-
-
-var imagesContainer = document.getElementById('imagesContainer');
-var gameTitle = document.getElementsByTagName('h2')[0];
-var roundTitle = document.getElementsByTagName('h3')[0];
-var instructions = document.getElementsByClassName('instructions')[0];
-var progressBar = document.getElementsByClassName('progressBar')[0];
-var buttonContainer = document.getElementsByTagName('button')[0];
-var clicks = 0;
+// Build the all time total chart
+function buildTotalChart() {
+    if(localStorage.getItem('Total Votes') == null) {
+        for(var i = 0; i < images.length; i++){
+            allTimeTotal.push(images[i]);
+        }    
+        localStorage.setItem('Total Votes', JSON.stringify(allTimeTotal));
+    } else {
+        var jsonParse = JSON.parse(localStorage.getItem('Total Votes'));
+        for(var jsonParseIndex = 0; jsonParseIndex < jsonParse.length; jsonParseIndex++){
+            for(var imageIndex = 0; imageIndex < images.length; imageIndex++){
+                if(jsonParse[jsonParseIndex].filename == images[imageIndex].filename) {
+                    jsonParse[jsonParseIndex].y += images[imageIndex].y;
+                }    
+            }    
+        }    
+        localStorage.setItem('Total Votes', JSON.stringify(jsonParse));
+        return jsonParse;
+    }    
+}    
 
 
 function generate3Images() {
@@ -97,27 +93,21 @@ function generate3Images() {
         roundTitle.innerText = ' ';
         progressBar.setAttribute('class', 'hide');
         imagesContainer.innerHTML = ' ';
-        buildTotalChart();
+        // loadChart();
         loadTotalChart();
-        
         showResults();
-     
-
         }
 
 }
 
 
-
-
-
 function imageClickCounter(e) {
+
     var target = e.target;
     if(target.classList.contains('image')){
         clicks++;
     }
-
-
+    
     var targetSource = target.src;
     var splitTarget = targetSource.split('/');
     var targetSrc = splitTarget[splitTarget.length - 1];
@@ -131,13 +121,11 @@ function imageClickCounter(e) {
             images[imageIndex].imageClickTotal += 1;
             images[imageIndex].y++;
         } 
-        chart.render(loadChart());
+        loadChart();
     }
 
 
 }
-// loadChart();
-// loadTotalChart();
 
 function showResults() {
     var results = document.getElementById('results');
@@ -190,6 +178,8 @@ function funcName(e) {
 
 
 window.addEventListener('load', buildTotalChart);
+// imagesContainer.addEventListener("click", generate3Images);
 imagesContainer.addEventListener("click", imageClickCounter);
 document.getElementById('startGame').addEventListener("click", generate3Images);
+
 imagesContainer.addEventListener("click", funcName);

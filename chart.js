@@ -6,12 +6,12 @@ function loadChart () {
 			text: "User Pick"              
 		},
 		axisX:{
-			labelAngle: 270,
+			labelAngle: 0,
 		  },
 		data: [              
 		{
 			// Change type to "doughnut", "line", "splineArea", etc.
-			type: "column",
+			type: "bar",
 			dataPoints: images
 		}
 		]
@@ -25,12 +25,12 @@ function loadTotalChart () {
 		text: "All Time Total"              
 	},
 	axisX:{
-		labelAngle: 270,
+		// labelAngle: 270,
 		},
 	data: [              
 	{
 		// Change type to "doughnut", "line", "splineArea", etc.
-		type: "column",
+		type: "bar",
 		dataPoints: buildTotalChart()
 	}
 	]
