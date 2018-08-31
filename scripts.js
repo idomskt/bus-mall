@@ -11,6 +11,7 @@ var images = [];
 var votes = [];
 var allTimeTotal = [];
 var imagesContainer = document.getElementById('imagesContainer');
+var results = document.getElementById('results');
 var gameTitle = document.getElementsByTagName('h2')[0];
 var roundTitle = document.getElementsByTagName('h3')[0];
 var instructions = document.getElementsByClassName('instructions')[0];
@@ -89,6 +90,7 @@ function generate3Images() {
         imagesContainer.appendChild(createImage);
     
     } else {
+        results.classList.remove('hide');;
         gameTitle.innerText = 'Results';
         roundTitle.innerText = ' ';
         progressBar.setAttribute('class', 'hide');
@@ -124,16 +126,15 @@ function imageClickCounter(e) {
         loadChart();
     }
 
-
 }
 
 function showResults() {
-    var results = document.getElementById('results');
+    var displaySort = document.getElementsByClassName('displaySort')[0];
     var list = document.createElement('ul');
-    results.appendChild(list);
+    displaySort.appendChild(list);
     
     var listItem, createImage, clickResults;
-    var imagesCopy = images;
+    var imagesCopy = images.slice(0);
 
     for(var imageIndex = 0; imageIndex < images.length; imageIndex++){
         votes.push(images[imageIndex].y);
@@ -150,18 +151,19 @@ function showResults() {
                 createImage.setAttribute('src', 'images/' + imagesCopy[imageIndex].filename);
                 clickResults = document.createElement('span');
                 clickResults.innerHTML = votes[votesIndex];
-                listItem.appendChild(clickResults);
                 listItem.appendChild(createImage);
+                listItem.appendChild(clickResults);
                 list.appendChild(listItem);
                 imagesCopy.splice(imageIndex, 1);
             }
         }
     }
 
+    var displayButton = document.getElementsByClassName('restartGame')[0];
     var resetButton = document.createElement('button');
     resetButton.setAttribute('onClick', 'location.reload()');
     resetButton.innerText = 'Restart The Game';
-    results.appendChild(resetButton);
+    displayButton.appendChild(resetButton);
     
     
 }
