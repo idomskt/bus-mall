@@ -92,10 +92,38 @@ ul span {
 .displaySort {
     width: 50%;
 }
+.displaySort img {
+    animation: 3s expandImages;
+}
 .restartGame {
     width: 100%;
 }
-/* #chartContainer, #totalChartContainer {
-    width: 50%;
-} */
 
+#imagesContainer img:hover {
+    transform: scale(1.2);
+    transition: transform .5s;
+}
+.fadeIn {
+    animation: 1s expandImages;
+}
+.fadeOut {
+    animation: 1s shrinkImages;
+}
+
+@keyframes shrinkImages {
+    from {
+        max-height: 200px;
+    }
+    to {
+        max-height: 0px;
+    }
+}
+
+@keyframes expandImages {
+    from {
+        max-height: 0px;
+    }
+    to {
+        max-height: 200px;
+    }
+}

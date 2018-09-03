@@ -18,6 +18,8 @@ var instructions = document.getElementsByClassName('instructions')[0];
 var progressBar = document.getElementsByClassName('progressBar')[0];
 var buttonContainer = document.getElementsByTagName('button')[0];
 var clicks = 0;
+var threeImages = [];
+
 
 images.push(new Image('bag.jpg'));
 images.push(new Image('banana.jpg'));
@@ -68,7 +70,9 @@ function generate3Images() {
         var leftImage = Math.floor(Math.random()*images.length);
         var centerImage = Math.floor(Math.random()*images.length);
         var rightImage = Math.floor(Math.random()*images.length);
-        
+        threeImages.push(leftImage);
+        threeImages.push(centerImage);
+        threeImages.push(rightImage);
         imagesContainer.innerHTML = ' ';
         
         while(leftImage == centerImage || leftImage == rightImage || centerImage == rightImage) {
@@ -78,19 +82,19 @@ function generate3Images() {
         
         var createImage = document.createElement('img');
         createImage.setAttribute('src', 'images/' + images[leftImage].filename);
-        createImage.setAttribute('class', 'image');
+        createImage.setAttribute('class', 'image fadeIn');
         imagesContainer.appendChild(createImage);
         createImage = document.createElement('img');
         createImage.setAttribute('src', 'images/' + images[centerImage].filename);
-        createImage.setAttribute('class', 'image');
+        createImage.setAttribute('class', 'image fadeIn');
         imagesContainer.appendChild(createImage);
         createImage = document.createElement('img');
         createImage.setAttribute('src', 'images/' + images[rightImage].filename);
-        createImage.setAttribute('class', 'image');
+        createImage.setAttribute('class', 'image fadeIn');
         imagesContainer.appendChild(createImage);
     
     } else {
-        results.classList.remove('hide');;
+        results.classList.remove('hide');
         gameTitle.innerText = 'Results';
         roundTitle.innerText = ' ';
         progressBar.setAttribute('class', 'hide');
@@ -104,12 +108,16 @@ function generate3Images() {
 
 
 function imageClickCounter(e) {
-
+    for(var i = 0; i < 3; i++) {
+        document.getElementsByClassName('image')[i].classList.remove('fadeIn');
+        document.getElementsByClassName('image')[i].classList += ' fadeOut';
+    }
     var target = e.target;
     if(target.classList.contains('image')){
         clicks++;
-        generate3Images();
+        setTimeout(generate3Images, 1000);
     }
+    
     
     var targetSource = target.src;
     var splitTarget = targetSource.split('/');
