@@ -166,6 +166,7 @@ function showResults() {
                 listItem = document.createElement('li');
                 createImage = document.createElement('img');
                 createImage.setAttribute('src', 'images/' + imagesCopy[imageIndex].filename);
+                createImage.setAttribute('class', 'expand');
                 clickResults = document.createElement('span');
                 clickResults.innerHTML = votes[votesIndex];
                 listItem.appendChild(createImage);

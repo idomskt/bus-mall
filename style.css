@@ -1,7 +1,7 @@
 body {
     text-align: center;
     background-image: url('http://i44.photobucket.com/albums/f35/idomosko/shopping-malls_zpspiueegjy.jpg');
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 .bg-overlay {
     position: absolute;
@@ -17,6 +17,7 @@ main {
     padding: 50px;
     margin: auto;
     background-color: white;
+    overflow: hidden;
 }
 h1 {
     text-transform: capitalize;
@@ -93,9 +94,6 @@ ul span {
 .displaySort {
     width: 50%;
 }
-.displaySort img {
-    animation: 3s expandImages;
-}
 .restartGame {
     width: 100%;
 }
@@ -131,7 +129,12 @@ animation: .8s slideInFromBottom;
 .slideOutToRight {
     animation: .8s slideOutToRight;
 }
-
+.expand {
+    animation: 3s expand;
+}
+.rotate {
+    animation: .8s rotate;
+}
 /* Slide In */
 @keyframes slideInFromLeft {
     from {left: -700px;}
@@ -158,9 +161,24 @@ animation: .8s slideInFromBottom;
     from {bottom: 0;}
     to {bottom: -700px;}
 }
+@keyframes expand {
+    from {max-height: 0px;}
+    to {max-height: 300px;}
+}
 
-
-
+@keyframes rotate {
+    0% {transform: rotate(0deg);}
+    10% {transform: rotate(36deg);}
+    20% {transform: rotate(72deg);}
+    30% {transform: rotate(112deg);}
+    40% {transform: rotate(145deg);}
+    50% {transform: rotate(190deg);}
+    60% {transform: rotate(230deg);}
+    70% {transform: rotate(270deg);}
+    80% {transform: rotate(300deg);}
+    90% {transform: rotate(330deg);}
+    100% {transform: rotate(360deg);}
+}
 
 
 /* .fadeIn {
