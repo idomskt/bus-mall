@@ -60,7 +60,7 @@ function buildTotalChart() {
 
 function generate3Images() {
     gameTitle.innerText = 'Please select 1 of the images below';
-    roundTitle.innerText = 'This is round number ' + clicks;
+    roundTitle.innerText = 'This is round number ' + (clicks + 1);
     buttonContainer.innerHTML = ' ';
     instructions.innerHTML = ' ';
     progressBar.removeAttribute('class', 'hide');
@@ -82,15 +82,15 @@ function generate3Images() {
         
         var createImage = document.createElement('img');
         createImage.setAttribute('src', 'images/' + images[leftImage].filename);
-        createImage.setAttribute('class', 'image fadeIn');
+        createImage.setAttribute('class', 'image fadeIn imgFromLeft');
         imagesContainer.appendChild(createImage);
         createImage = document.createElement('img');
         createImage.setAttribute('src', 'images/' + images[centerImage].filename);
-        createImage.setAttribute('class', 'image fadeIn');
+        createImage.setAttribute('class', 'image fadeIn imgFromBottom');
         imagesContainer.appendChild(createImage);
         createImage = document.createElement('img');
         createImage.setAttribute('src', 'images/' + images[rightImage].filename);
-        createImage.setAttribute('class', 'image fadeIn');
+        createImage.setAttribute('class', 'image fadeIn imgFromRight');
         imagesContainer.appendChild(createImage);
     
     } else {
@@ -108,16 +108,24 @@ function generate3Images() {
 
 
 function imageClickCounter(e) {
-    for(var i = 0; i < 3; i++) {
-        document.getElementsByClassName('image')[i].classList.remove('fadeIn');
-        document.getElementsByClassName('image')[i].classList += ' fadeOut';
-    }
+
+    document.getElementsByClassName('image')[0].classList.remove('imgFromLeft');
+    document.getElementsByClassName('image')[0].classList += ' slideOutToLeft';
+    document.getElementsByClassName('image')[1].classList.remove('imgFromBottom');
+    document.getElementsByClassName('image')[1].classList += ' slideOutToBottom';
+    document.getElementsByClassName('image')[2].classList.remove('imgFromRight');
+    document.getElementsByClassName('image')[2].classList += ' slideOutToRight';
+
+    // for(var i = 0; i < 3; i++) {
+    //     document.getElementsByClassName('image')[i].classList.remove('fadeIn');
+    //     document.getElementsByClassName('image')[i].classList += ' fadeOut';
+    // }
+
     var target = e.target;
     if(target.classList.contains('image')){
         clicks++;
-        setTimeout(generate3Images, 1000);
+        setTimeout(generate3Images, 800);
     }
-    
     
     var targetSource = target.src;
     var splitTarget = targetSource.split('/');

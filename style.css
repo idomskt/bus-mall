@@ -1,6 +1,7 @@
 body {
     text-align: center;
     background-image: url('http://i44.photobucket.com/albums/f35/idomosko/shopping-malls_zpspiueegjy.jpg');
+    overflow: hidden;
 }
 .bg-overlay {
     position: absolute;
@@ -98,18 +99,76 @@ ul span {
 .restartGame {
     width: 100%;
 }
-
+#imagesContainer img {
+    position: relative;
+}
 #imagesContainer img:hover {
     transform: scale(1.2);
     transition: transform .5s;
-}
-.fadeIn {
-    animation: 1s expandImages;
-}
-.fadeOut {
-    animation: 1s shrinkImages;
+    z-index: 1;
 }
 
+
+
+
+
+
+.imgFromLeft {
+animation: .8s slideInFromLeft;
+}
+.imgFromRight {
+animation: .8s slideInFromRight;
+}
+.imgFromBottom {
+animation: .8s slideInFromBottom;
+}
+.slideOutToLeft {
+    animation: .8s slideOutToLeft;
+}
+.slideOutToBottom {
+    animation: .8s slideOutToBottom;
+}
+.slideOutToRight {
+    animation: .8s slideOutToRight;
+}
+
+/* Slide In */
+@keyframes slideInFromLeft {
+    from {left: -700px;}
+    to {left: 0;}
+}
+@keyframes slideInFromRight {
+    from {right: -700px;}
+    to {right: 0;}
+}
+@keyframes slideInFromBottom {
+    from {bottom: -700px;}
+    to {bottom: 0;}
+}
+/* Slide Out */
+@keyframes slideOutToLeft {
+    from {left: 0;}
+    to {left: -700px;}
+}
+@keyframes slideOutToRight {
+    from {right: 0;}
+    to {right: -700px;}
+}
+@keyframes slideOutToBottom {
+    from {bottom: 0;}
+    to {bottom: -700px;}
+}
+
+
+
+
+
+/* .fadeIn {
+    animation: .5s expandImages;
+}
+.fadeOut {
+    animation: .5s shrinkImages;
+}
 @keyframes shrinkImages {
     from {
         max-height: 200px;
@@ -126,4 +185,4 @@ ul span {
     to {
         max-height: 200px;
     }
-}
+} */
